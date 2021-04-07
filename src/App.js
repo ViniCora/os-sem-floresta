@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Header from './Header/Header.js';
 import React, {useState, useEffect} from 'react';
 import AtributesDataService from './Services/AtributesService.js';
+import CardPersonagem from './CardPersonagem/CardPersonagem';
 
 
 function App() {
@@ -18,6 +19,11 @@ function App() {
   const retrieveAtributes = () => {
     AtributesDataService.getPlayers()
     .then((response) => {
+
+    var data = response.data.sort((a,b) => {
+      return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    });
+
     setPlayersAtribute(response.data);
     })
     .catch((e) => {
@@ -29,20 +35,25 @@ function App() {
     <div className="App">
       <Header></Header>
       <body>
-        <div>
-          <h1 style ={{paddingTop:'50px', color: '#fff'}}>Escolha o pesonagem</h1>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <Link to={`/cadastrarPersonagem`}>
+            <h1 style ={{paddingTop:'20px', fontSize: '28px', color: '#696969', width: '400px'}}>Cadastre um novo Personagem</h1>
+          </Link>
         </div>
-        <div style={{display: 'flex', flexDirection:'row', justifyContent: 'center', paddingTop: '30px'}}>
+        <div>
+          <h1 style ={{paddingTop:'20px', color: '#fff'}}>Escolha um pesonagem:</h1>
+        </div>
+        <div style={{display: 'flex', flexDirection:'row', justifyContent: 'space-evenly', paddingTop: '30px'}}>
             {playersAtribute == null ? 'Carregando' :  playersAtribute.map((player, index) => {
               if(!player.mostrar_tela){
                 return;
               }
               return (
-                <div style={{paddingLeft:"40px"}}>
+                <div style={{display: 'flex', flexDirection: 'column'}}>
                   <Link to={`/personagens/${player.name.replace(/\s/g, '')}`}>
-                    <img style={{width: '220px', height: '240px',paddingLeft: '0px'}} src={`https://os-sem-floresta-api.herokuapp.com/${player.imagePath}`} alt={player.name} />
+                     <CardPersonagem Atributes={player}></CardPersonagem>    
                   </Link>
-              </div>
+                </div>
               );
             })}
         </div>
