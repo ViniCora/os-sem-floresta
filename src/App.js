@@ -10,11 +10,12 @@ import CardPersonagem from './CardPersonagem/CardPersonagem';
 
 function App() {
   const [playersAtribute, setPlayersAtribute] = useState([]);
- 
+  const [value, setValue] = useState(0);
   
   useEffect(() => {
     retrieveAtributes();
-  }, []);
+  });
+
 
   const retrieveAtributes = () => {
     AtributesDataService.getPlayers()
