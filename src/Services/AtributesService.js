@@ -24,6 +24,10 @@ const updateMostrarTela = (id, data) => {
     return http.put(`/atributes/mostrarTela/${id}`, data);
 }
 
+const updatePontosAdicionar = (id, data) => {
+    return http.put(`/atributes/pontosAdicionar/${id}`, data);
+}
+
 const updateForca = (id, data) => {
     return http.put(`/atributes/forca/${id}`, data);
 }
@@ -56,4 +60,5 @@ const updatePercepcao = (id, data) => {
     return http.put(`/atributes/percepcao/${id}`, data);
 }
 
-export default { getAtributes, getPlayers, getPlayerImage, createPlayer, updateVida, updateMostrarTela, updateForca, updateDestreza, updateCarisma, updateInteligencia, updateResistencia, updateMira, updateOficio, updatePercepcao};
+export default { getAtributes, getPlayers, getPlayerImage, createPlayer, updateVida, updateMostrarTela, updatePontosAdicionar, 
+    updateForca, updateDestreza, updateCarisma, updateInteligencia, updateResistencia, updateMira, updateOficio, updatePercepcao};

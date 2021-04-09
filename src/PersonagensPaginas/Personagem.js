@@ -18,11 +18,14 @@ function Personagem({Nome}){
         .then((response) => {
         setAtributes(response.data[0]);
         setMostrarTela(response.data[0].mostrar_tela);
+        setValueadd(response.data[0].pontos_adicionar);
         })
         .catch((e) => {
         console.log(e);
         });
     };
+
+    const [valueAdd, setValueadd] = useState(0);
 
     return(
         <div>
@@ -75,10 +78,14 @@ function Personagem({Nome}){
                         </label>
                         <label style={{fontSize: '30px', paddingLeft:'10px', color: '#fff'}}>Sim</label>
                     </div>
+                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom:'20px'}}>
+                        <label style={{fontSize: '30px', paddingRight:'10px', color: '#fff'}}>Novos pontos a serem distribuidos: {valueAdd}</label>
+                    </div>
                     </div>
 
                     <Atributos id={atributes._id} Força={atributes.força} Destreza={atributes.destreza} Carisma={atributes.carisma} Inteligencia={atributes.inteligencia} 
-                        Resistencia={atributes.resistencia} Mira={atributes.mira} Oficio={atributes.oficio} Percepcao={atributes.percepcao} Vida={atributes.vida}></Atributos>
+                        Resistencia={atributes.resistencia} Mira={atributes.mira} Oficio={atributes.oficio} Percepcao={atributes.percepcao} 
+                        Vida={atributes.vida} Adicionar={valueAdd} setAdicionar={setValueadd}></Atributos>
                 </div>
             }
         </div>

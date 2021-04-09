@@ -46,7 +46,7 @@ function App() {
         </div>
         <div style={{display: 'flex', flexDirection:'row', justifyContent: 'space-evenly', paddingTop: '30px'}}>
             {playersAtribute == null ? 'Carregando' :  playersAtribute.map((player, index) => {
-              if(!player.mostrar_tela){
+              if(!player.mostrar_tela || player.name == "valorPontos"){
                 return;
               }
               return (

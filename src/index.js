@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Personagem from './PersonagensPaginas/Personagem';
 import AtributesDataService from './Services/AtributesService.js';
 import CadPersonagem from './CadPersonagem/CadPersonagem';
+import DistribuirPontos from './DistribuirPontos/DistribuirPontos';
 
 
 window.onload = function(){
@@ -19,6 +20,7 @@ window.onload = function(){
           <Switch>
             <Route path="/" component={App} exact />
             <Route path="/cadastrarPersonagem" component={CadPersonagem} exact />
+            <Route path="/distribuirPontos" component={DistribuirPontos} exact />
             {data == null ? '' :  data.map((d, index) => {
 
               return (

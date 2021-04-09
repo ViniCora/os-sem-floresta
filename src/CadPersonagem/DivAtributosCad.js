@@ -1,6 +1,6 @@
 import React from 'react';
 
-function DivAtributoCad({Atributo, Value, setValue}){
+function DivAtributoCad({Atributo, Value, setValue, points, setPoints}){
 
     function getPadding(Atributo){
         switch (Atributo) {
@@ -34,7 +34,7 @@ function DivAtributoCad({Atributo, Value, setValue}){
                     type='number' onChange={(event)=>{
                       var value = event.target.value;
 
-                      if(value <= 100 && value >= -100){
+                      if(value <= 100 && value >= 0){
                         setValue(value);
                       }
 

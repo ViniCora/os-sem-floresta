@@ -13,11 +13,13 @@ import confirmar from '../Icons/right.png'
 import cancenlar from '../Icons/wrong.png'
 import iniciativaImg from '../Icons/podium.png'
 import percepcaoImg from '../Icons/Binoculars.png'
+import plus from '../Icons/plus.png'
+import minus from '../Icons/minus.png'
 import Modal from 'react-modal';
 import AtributesDataService from '../Services/AtributesService.js';
 import './CardAtributos.css'
 
-function CardAtributos({Atributo, Banco, Value, id}){
+function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar}){
     const customStyles = {
         content : {
           top                   : '25%',
@@ -45,6 +47,95 @@ function CardAtributos({Atributo, Banco, Value, id}){
     const [valorPreEdicao, setValorPreEdicao] = useState(valor);
     const [valorGarantido, setValorGarantido] = useState(0);
     const [iniciativa, setIniciativa] = useState(0);
+
+    function alterarPontosAdicionar(newValue){
+        AtributesDataService.updatePontosAdicionar(id, {value: newValue})
+                .then((response) => {
+                    console.log("Pontos à adicionar alterados com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+    }
+
+    function alterarValorBanco(newValue){
+        switch (Banco) {
+              case 'força':
+                AtributesDataService.updateForca(id, {value: newValue})
+                .then((response) => {
+                    console.log("Força alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
+              case 'destreza':
+                AtributesDataService.updateDestreza(id, {value: newValue})
+                .then((response) => {
+                    console.log("Destreza alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
+              case 'carisma':
+                AtributesDataService.updateCarisma(id, {value: newValue})
+                .then((response) => {
+                    console.log("Carisma alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
+              case 'inteligencia':
+                AtributesDataService.updateInteligencia(id, {value: newValue})
+                .then((response) => {
+                    console.log("Inteligencia alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
+              case 'resistencia':
+                AtributesDataService.updateResistencia(id, {value: newValue})
+                .then((response) => {
+                    console.log("Resistencia alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
+              case 'mira':
+                AtributesDataService.updateMira(id, {value: newValue})
+                .then((response) => {
+                    console.log("Mira alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
+              case 'oficio':
+                AtributesDataService.updateOficio(id, {value: newValue})
+                .then((response) => {
+                    console.log("Oficio alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
+              case 'percepcao':
+                AtributesDataService.updatePercepcao(id, {value: newValue})
+                .then((response) => {
+                    console.log("Percepção alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
+            default:
+              console.log(`Sorry, we are out of ${Banco}.`);
+          }
+    }
  
     return(
         
@@ -77,7 +168,7 @@ function CardAtributos({Atributo, Banco, Value, id}){
                                             (valorGarantido <= 0) ? 'Ação Impossivel!' :
                                             (roll >= 1 && roll < valorMinimo) ? 'Falhou, rodou: ' + roll + (modifier !== 0 ? ` (${rollSemMod} com modifier de: ${modifier})` : '') +  '.' :
                                             (roll < 100 && roll > valorMinimo && valorGarantido < 100) ? 'Sucesso, rodou: ' + roll + (modifier !== 0 ? ` (${rollSemMod} com modifier de: ${modifier})` : '') +'.' : 
-                                            valorGarantido >= 100 ? 'Ação garantida!' : ''
+                                            (modifier > 0 && valorGarantido >= 100) ? 'Ação garantida!' : ''
                                         }</h2>
                                         { (roll <= 0 || roll >= 100 || valorGarantido <= 0) ? '' : 
                                             <h2 style={{ fontSize: '20px', marginBottom: '20px'}}>{`Valor minimo para sucesso era: ${valorMinimo}.`}</h2>
@@ -207,6 +298,7 @@ function CardAtributos({Atributo, Banco, Value, id}){
             
                  {
                      Atributo === 'Iniciativa' ? '' : 
+                     Atributo !== "Vida" ? '' :
                      <div style={{paddingRight: '10px'}}>
                          <input type='image' src={isEditar ? cancenlar : editarImg} alt='row' width="40px" height="40px" onClick={()=>{
                  
@@ -221,12 +313,40 @@ function CardAtributos({Atributo, Banco, Value, id}){
                         }/> 
                      </div>
                  }
+
+                {
+                    ( Atributo === 'Iniciativa' || Atributo == 'Vida') ? '' :
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <div style={{paddingRight: '10px'}}>
+                         <input type='image' src={minus} alt='row' width="40px" height="40px" onClick={()=>{
+                                var newValue = valor - 1;
+                                setValor(newValue);
+                                alterarValorBanco(newValue);
+                                var newAdicionar = Adicionar + 1;
+                                setAdicionar(newAdicionar);
+                                alterarPontosAdicionar(newAdicionar);
+                            }
+                            }/> 
+                        </div>
+                        <div style={{paddingRight: '10px'}}>
+                            <input type='image' src={plus} alt='row' width="40px" height="40px" onClick={()=>{
+                                if(Adicionar > 0){
+                                    var newValue = valor + 1;
+                                    setValor(newValue);
+                                    alterarValorBanco(newValue);
+                                    var newAdicionar = Adicionar - 1;
+                                    setAdicionar(newAdicionar);
+                                    alterarPontosAdicionar(newAdicionar);
+                                }        
+                            }
+                            }/> 
+                        </div>
+                    </div>
+                 }
             
              {isEditar ? 
                 <input type='image' src={confirmar} alt='row' width="40px" height="40px" onClick={()=>{
 
-                    switch (Banco) {
-                        case 'vida':
                             AtributesDataService.updateVida(id, {value: valor})
                             .then((response) => {
                                 console.log("Vida alterada com sucesso");
@@ -234,82 +354,6 @@ function CardAtributos({Atributo, Banco, Value, id}){
                             .catch((e) => {
                             console.log(e);
                             });
-                          break;
-                          case 'força':
-                            AtributesDataService.updateForca(id, {value: valor})
-                            .then((response) => {
-                                console.log("Força alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
-                          break;
-                          case 'destreza':
-                            AtributesDataService.updateDestreza(id, {value: valor})
-                            .then((response) => {
-                                console.log("Destreza alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
-                          break;
-                          case 'carisma':
-                            AtributesDataService.updateCarisma(id, {value: valor})
-                            .then((response) => {
-                                console.log("Carisma alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
-                          break;
-                          case 'inteligencia':
-                            AtributesDataService.updateInteligencia(id, {value: valor})
-                            .then((response) => {
-                                console.log("Inteligencia alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
-                          break;
-                          case 'resistencia':
-                            AtributesDataService.updateResistencia(id, {value: valor})
-                            .then((response) => {
-                                console.log("Resistencia alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
-                          break;
-                          case 'mira':
-                            AtributesDataService.updateMira(id, {value: valor})
-                            .then((response) => {
-                                console.log("Mira alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
-                          break;
-                          case 'oficio':
-                            AtributesDataService.updateOficio(id, {value: valor})
-                            .then((response) => {
-                                console.log("Oficio alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
-                          break;
-                          case 'percepcao':
-                            AtributesDataService.updatePercepcao(id, {value: valor})
-                            .then((response) => {
-                                console.log("Percepção alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
-                          break;
-                        default:
-                          console.log(`Sorry, we are out of ${Banco}.`);
-                      }
 
                         setIsEditar(false);
                         

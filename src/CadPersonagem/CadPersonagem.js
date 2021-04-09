@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header.js';
 import DivNomeEBaseCad from './DivNomeEBaseCad.js';
 import DivAtributosCad from './DivAtributosCad.js';
@@ -21,6 +21,52 @@ function CadPersonagem(){
     const [percepcao, setPercepcao] = useState(0);
     const [mostrarTelaInicial, setMostrarTelaInicial] = useState(false);
     const [file, setFile] = useState(null);
+    const [points, setPoints] = useState(0);
+
+    useEffect(() => {
+      retrievePoints();
+    }, []);
+  
+  
+    const retrievePoints = () => {
+      AtributesDataService.getAtributes("valorPontos")
+      .then((response) => {
+      setPoints(response.data[0].value);
+      })
+      .catch((e) => {
+      console.log(e);
+      });
+  };
+
+  function pontosUsados(){
+    var pontosT = 0;
+    if(força != ''){
+      pontosT+=parseInt(força) ;
+    }
+    if(destreza != ''){
+      pontosT+=parseInt(destreza) ;
+    }
+    if(carisma != ''){
+      pontosT+=parseInt(carisma) ;
+    }
+    if(inteligencia != ''){
+      pontosT+=parseInt(inteligencia) ;
+    }
+    if(resistencia != ''){
+      pontosT+=parseInt(resistencia) ;
+    }
+    if(mira != ''){
+      pontosT+=parseInt(mira) ;
+    }
+    if(oficio != ''){
+      pontosT+=parseInt(oficio) ;
+    } 
+    if(percepcao != ''){
+      pontosT+=parseInt(percepcao) ;
+    }
+
+      return pontosT;
+  }
 
     return(
         <div>
@@ -33,14 +79,39 @@ function CadPersonagem(){
             <DivNomeEBaseCad Atributo="Nascimento" Value={nascimento} setValue={setNascimento}></DivNomeEBaseCad>
             <DivNomeEBaseCad Atributo="Ofício Base" Value={oficioBase} setValue={setOficioBase}></DivNomeEBaseCad>
             <DivNomeEBaseCad Atributo="Ofício Pré Base" Value={oficioPreBase} setValue={setOficioPreBase}></DivNomeEBaseCad>
-            <DivAtributosCad Atributo="Força" Value={força} setValue={setForça}></DivAtributosCad>
-            <DivAtributosCad Atributo="Destreza" Value={destreza} setValue={setDestreza}></DivAtributosCad>
-            <DivAtributosCad Atributo="Carisma" Value={carisma} setValue={setCarisma}></DivAtributosCad>
-            <DivAtributosCad Atributo="Inteligência" Value={inteligencia} setValue={setInteligencia}></DivAtributosCad>
-            <DivAtributosCad Atributo="Resistência" Value={resistencia} setValue={setResistencia}></DivAtributosCad>
-            <DivAtributosCad Atributo="Mira" Value={mira} setValue={setMira}></DivAtributosCad>
-            <DivAtributosCad Atributo="Ofício" Value={oficio} setValue={setOficio}></DivAtributosCad>
-            <DivAtributosCad Atributo="Percepção" Value={percepcao} setValue={setPercepcao}></DivAtributosCad>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingTop: '20px', paddingBottom: '50px'}}>
+              {pontosUsados() > 470 ? '' : 
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <label style={{fontSize: '30px', color: '#fff'}}>{`Total de pontos disponíveis para distribuir: `}</label>
+                <label style={{fontSize: '30px', color: '#fff ', paddingLeft:'10px'}}>{parseInt(points) - pontosUsados()}</label>
+              </div>
+              }
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <label style={{fontSize: '30px', color: '#fff'}}>{`Pontos usados: `}</label>
+                {pontosUsados() < 470 ? 
+                  <label style={{fontSize: '30px', color: '#ffa500', paddingLeft:'10px'}}>{pontosUsados()}</label>
+                :
+                pontosUsados() === 470 ? 
+                  <label style={{fontSize: '30px', color: '#0B9205', paddingLeft:'10px'}}>{pontosUsados()}</label>
+                :
+                  <label style={{fontSize: '30px', color: '#ff0000', paddingLeft:'10px'}}>{pontosUsados()}</label>
+                }
+              </div>
+              {pontosUsados() <= 470 ? '' : 
+                <label style={{fontSize: '30px', color: '#ff0000'}}>{`Você passou do número de pontos disponíveis!`}</label>
+              }
+              {pontosUsados() >= 470 ? '' : 
+                <label style={{fontSize: '30px', color: '#ff0000'}}>{`Feche 470 pontos antes de cadastrar!`}</label>
+              }
+            </div>
+            <DivAtributosCad Atributo="Força" Value={força} setValue={setForça} points={points} setPoints={setPoints}setPoints={setPoints}></DivAtributosCad>
+            <DivAtributosCad Atributo="Destreza" Value={destreza} setValue={setDestreza} setPoints={setPoints}></DivAtributosCad>
+            <DivAtributosCad Atributo="Carisma" Value={carisma} setValue={setCarisma} setPoints={setPoints}></DivAtributosCad>
+            <DivAtributosCad Atributo="Inteligência" Value={inteligencia} setValue={setInteligencia} setPoints={setPoints}></DivAtributosCad>
+            <DivAtributosCad Atributo="Resistência" Value={resistencia} setValue={setResistencia} setPoints={setPoints}></DivAtributosCad>
+            <DivAtributosCad Atributo="Mira" Value={mira} setValue={setMira} setPoints={setPoints}></DivAtributosCad>
+            <DivAtributosCad Atributo="Ofício" Value={oficio} setValue={setOficio} setPoints={setPoints}></DivAtributosCad>
+            <DivAtributosCad Atributo="Percepção" Value={percepcao} setValue={setPercepcao} setPoints={setPoints}></DivAtributosCad>
 
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom:'20px'}}>
               <label style={{fontSize: '30px', paddingRight:'10px', color: '#fff'}}>Mostrar na tela inicial?</label>
@@ -61,8 +132,7 @@ function CadPersonagem(){
             </div>
 
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingBottom:'20px'}}>
-              <label style={{fontSize: '25px', color: '#fff'}}>Escolha um arquivo com o nome do personagem e sem espaçamento:</label>
-              <label style={{fontSize: '15px', color: '#fff'}}>Ex: "LuisGarciaDoNascimento.jpg":</label>
+              <label style={{fontSize: '25px', color: '#fff'}}>Escolha a imagem do personagem:</label>
               <div style={{display: 'flex', flexDirection: 'row', maxWidth: '125px', paddingLeft: '10px',paddingBottom: '10px', paddingTop: '20px'}}>
                 <input type="file" onChange={(e)=>{
                   console.log(e.target.files[0]);
@@ -74,6 +144,9 @@ function CadPersonagem(){
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', paddingBottom:'20px'}}>
                 <button style={{backgroundColor: '#000', color: '#fff',fontSize: '20px', borderColor: '#fff', 
                   borderRadius: '8px', borderStyle: 'solid', borderWidth: '2px'}} onClick={()=>{
+                          if(pontosUsados() > 470){
+                            alert(`Você não pode fazer um cadastro com mais de ${points} pontos!`);
+                          }else 
                           if(nome !== '' && jogador !== '' && força !== 0 && destreza !== 0 && carisma !== 0 && inteligencia !== 0 
                             && resistencia !== 0 && mira !== 0 && percepcao !== 0){
                               const data = {
@@ -115,7 +188,7 @@ function CadPersonagem(){
 
                               AtributesDataService.createPlayer(formData)
                               .then((response) => {
-                                alert("Personagem cadastrado com sucesso");
+                                alert("Personagem cadastrado com sucesso, link da pagina do personagem: https://os-sem-floresta.herokuapp.com/" + nome.replace(/\s/g, ''));
                                 setNome('');
                                 setJogador('');
                                 setNascimento('');
