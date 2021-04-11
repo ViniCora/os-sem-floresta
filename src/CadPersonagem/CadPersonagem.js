@@ -188,7 +188,8 @@ function CadPersonagem(){
 
                               AtributesDataService.createPlayer(formData)
                               .then((response) => {
-                                alert("Personagem cadastrado com sucesso, link da pagina do personagem: https://os-sem-floresta.herokuapp.com/" + nome.replace(/\s/g, ''));
+                                alert("Personagem cadastrado com sucesso, link da pagina do personagem: https://os-sem-floresta.herokuapp.com/personagens/" 
+                                + nome.replace(/\s/g, ''));
                                 setNome('');
                                 setJogador('');
                                 setNascimento('');
