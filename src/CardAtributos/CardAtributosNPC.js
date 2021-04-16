@@ -16,11 +16,11 @@ import percepcaoImg from '../Icons/Binoculars.png'
 import plus from '../Icons/plus.png'
 import minus from '../Icons/minus.png'
 import Modal from 'react-modal';
-import AtributesDataService from '../Services/AtributesService.js';
+import NPCDataService from '../Services/NpcService.js';
 import IniciativaDataService from '../Services/IniciativaService.js';
 import './CardAtributos.css'
 
-function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nome, imagePath}){
+function CardAtributosNPC({Atributo, Banco, Value, id, nome, imagePath}){
     const customStyles = {
         content : {
           top                   : '25%',
@@ -49,16 +49,6 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
     const [valorGarantido, setValorGarantido] = useState(0);
     const [iniciativa, setIniciativa] = useState(0);
 
-    function alterarPontosAdicionar(newValue){
-        AtributesDataService.updatePontosAdicionar(id, {value: newValue})
-                .then((response) => {
-                    console.log("Pontos à adicionar alterados com sucesso");
-                })
-                .catch((e) => {
-                console.log(e);
-                });
-    }
-
     function addIniciativa(ini){
 
         IniciativaDataService.newIniciativa({name: nome, imagePath: imagePath, value: ini})
@@ -72,8 +62,17 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
 
     function alterarValorBanco(newValue){
         switch (Banco) {
+              case 'vida': 
+                NPCDataService.updateVida(id, {value: valor})
+                .then((response) => {
+                    console.log("Vida alterada com sucesso");
+                })
+                .catch((e) => {
+                console.log(e);
+                });
+              break;
               case 'força':
-                AtributesDataService.updateForca(id, {value: newValue})
+                NPCDataService.updateForca(id, {value: newValue})
                 .then((response) => {
                     console.log("Força alterada com sucesso");
                 })
@@ -82,7 +81,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                 });
               break;
               case 'destreza':
-                AtributesDataService.updateDestreza(id, {value: newValue})
+                NPCDataService.updateDestreza(id, {value: newValue})
                 .then((response) => {
                     console.log("Destreza alterada com sucesso");
                 })
@@ -91,7 +90,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                 });
               break;
               case 'carisma':
-                AtributesDataService.updateCarisma(id, {value: newValue})
+                NPCDataService.updateCarisma(id, {value: newValue})
                 .then((response) => {
                     console.log("Carisma alterada com sucesso");
                 })
@@ -100,7 +99,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                 });
               break;
               case 'inteligencia':
-                AtributesDataService.updateInteligencia(id, {value: newValue})
+                NPCDataService.updateInteligencia(id, {value: newValue})
                 .then((response) => {
                     console.log("Inteligencia alterada com sucesso");
                 })
@@ -109,7 +108,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                 });
               break;
               case 'resistencia':
-                AtributesDataService.updateResistencia(id, {value: newValue})
+                NPCDataService.updateResistencia(id, {value: newValue})
                 .then((response) => {
                     console.log("Resistencia alterada com sucesso");
                 })
@@ -118,7 +117,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                 });
               break;
               case 'mira':
-                AtributesDataService.updateMira(id, {value: newValue})
+                NPCDataService.updateMira(id, {value: newValue})
                 .then((response) => {
                     console.log("Mira alterada com sucesso");
                 })
@@ -127,7 +126,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                 });
               break;
               case 'oficio':
-                AtributesDataService.updateOficio(id, {value: newValue})
+                NPCDataService.updateOficio(id, {value: newValue})
                 .then((response) => {
                     console.log("Oficio alterada com sucesso");
                 })
@@ -136,7 +135,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                 });
               break;
               case 'percepcao':
-                AtributesDataService.updatePercepcao(id, {value: newValue})
+                NPCDataService.updatePercepcao(id, {value: newValue})
                 .then((response) => {
                     console.log("Percepção alterada com sucesso");
                 })
@@ -323,7 +322,6 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
             
                  {
                      Atributo === 'Iniciativa' ? '' : 
-                     Atributo !== "Vida" ? '' :
                      <div style={{paddingRight: '10px'}}>
                          <input type='image' src={isEditar ? cancenlar : editarImg} alt='row' width="40px" height="40px" onClick={()=>{
                  
@@ -338,47 +336,11 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                         }/> 
                      </div>
                  }
-
-                {
-                    ( Atributo === 'Iniciativa' || Atributo == 'Vida') ? '' :
-                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <div style={{paddingRight: '10px'}}>
-                         <input type='image' src={minus} alt='row' width="40px" height="40px" onClick={()=>{
-                                var newValue = valor - 1;
-                                setValor(newValue);
-                                alterarValorBanco(newValue);
-                                var newAdicionar = Adicionar + 1;
-                                setAdicionar(newAdicionar);
-                                alterarPontosAdicionar(newAdicionar);
-                            }
-                            }/> 
-                        </div>
-                        <div style={{paddingRight: '10px'}}>
-                            <input type='image' src={plus} alt='row' width="40px" height="40px" onClick={()=>{
-                                if(Adicionar > 0){
-                                    var newValue = valor + 1;
-                                    setValor(newValue);
-                                    alterarValorBanco(newValue);
-                                    var newAdicionar = Adicionar - 1;
-                                    setAdicionar(newAdicionar);
-                                    alterarPontosAdicionar(newAdicionar);
-                                }        
-                            }
-                            }/> 
-                        </div>
-                    </div>
-                 }
             
              {isEditar ? 
                 <input type='image' src={confirmar} alt='row' width="40px" height="40px" onClick={()=>{
 
-                            AtributesDataService.updateVida(id, {value: valor})
-                            .then((response) => {
-                                console.log("Vida alterada com sucesso");
-                            })
-                            .catch((e) => {
-                            console.log(e);
-                            });
+                        alterarValorBanco(valor);
 
                         setIsEditar(false);
                         
@@ -393,4 +355,4 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
     );
 }
 
-export default CardAtributos;
+export default CardAtributosNPC;

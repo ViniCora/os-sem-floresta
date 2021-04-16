@@ -39,7 +39,8 @@ function Personagem({Nome}){
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', borderColor: '#fff', borderRadius: '8px', borderStyle: 'solid', borderWidth: '2px',
                 paddingLeft: '10px', paddingRight: '10px', marginTop: '20px', marginBottom: '50px', backgroundColor: '#696969'}}>  
                         
-                        <img style={{maxWidth: '200px', paddingLeft: '0px', paddingTop: '50px', paddingBottom: '50px'}} src={`https://os-sem-floresta-api.herokuapp.com/${atributes.imagePath}`} 
+                        <img style={{maxWidth: '200px', paddingLeft: '0px', paddingTop: '50px', paddingBottom: '50px'}} 
+                        src={`https://rpg-image-api.herokuapp.com/${atributes.imagePath}`} 
                         alt={Nome} />
                         
                         <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -85,7 +86,7 @@ function Personagem({Nome}){
 
                     <Atributos id={atributes._id} Força={atributes.força} Destreza={atributes.destreza} Carisma={atributes.carisma} Inteligencia={atributes.inteligencia} 
                         Resistencia={atributes.resistencia} Mira={atributes.mira} Oficio={atributes.oficio} Percepcao={atributes.percepcao} 
-                        Vida={atributes.vida} Adicionar={valueAdd} setAdicionar={setValueadd}></Atributos>
+                        Vida={atributes.vida} Adicionar={valueAdd} setAdicionar={setValueadd} nome={atributes.name} imagePath={atributes.imagePath}></Atributos>
                 </div>
             }
         </div>

@@ -36,9 +36,6 @@ function DistribuirPontos(){
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center', paddingTop: '30px'}}>
                 {playersAtribute == null ? 'Carregando' :  playersAtribute.map((player, index) => {
-                    if(player.name == "valorPontos"){
-                        return;
-                    }
                 return (
                     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                         <CardPersonagemComSwitch Atributes={player} playersParaAtualizar={playersParaAtualizar} setPlayersParaAtualizar={setPlayersParaAtualizar}
