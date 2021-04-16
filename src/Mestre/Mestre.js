@@ -58,7 +58,7 @@ function Mestre(){
                 <Link to={`/cadastrarPersonagem`}>
                     <h1 style ={{paddingTop:'5px', color: '#696969', cursor: 'pointer'}}>{`->CadastrarPlayer<-`}</h1>
                 </Link>
-                <Link to={`/cadastrarPersonagem`}>
+                <Link to={`/cadastrarNPC`}>
                     <h1 style ={{paddingTop:'5px', color: '#696969', cursor: 'pointer'}}>{`->CadastrarNPC<-`}</h1>
                 </Link>
                 <Link to={`/distribuirPontos`}>
