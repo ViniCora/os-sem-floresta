@@ -16,7 +16,6 @@ function Personagem({Nome}){
     const retrieveAtributes = () => {
         NpcDataService.getAtributes(Nome)
         .then((response) => {
-            console.log(response);
         setAtributes(response.data[0]);
         setMostrarTela(response.data[0].mostrar_tela);
         })

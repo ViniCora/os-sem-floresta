@@ -1,7 +1,7 @@
 import http from '../http-common.js';
 
 const getAtributes = (name) => {
-    return http.get(`/npc?name=${name}`);
+    return http.get(`/atributeNpc?name=${name}`);
 };
 
 const getNPC = () => {
