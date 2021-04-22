@@ -18,6 +18,7 @@ import minus from '../Icons/minus.png'
 import Modal from 'react-modal';
 import AtributesDataService from '../Services/AtributesService.js';
 import IniciativaDataService from '../Services/IniciativaService.js';
+import RollsDataService from '../Services/RollsService.js';
 import './CardAtributos.css'
 
 function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nome, imagePath}){
@@ -57,6 +58,30 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                 .catch((e) => {
                 console.log(e);
                 });
+    }
+
+    function salvarRoll(contestacao, valorRodado, varGarantido){
+        var sucesso = false;
+        if(valorRodado <= 100 && valorRodado >= valorMinimo && varGarantido < 100){
+            sucesso = true;
+        }
+
+        var data = {
+            name: nome,
+            imagePath: imagePath,
+            atributo: Atributo,
+            valorRodado: valorRodado,
+            valorContestação: contestacao,
+            sucesso: sucesso
+        }
+
+        RollsDataService.newRoll(data)
+        .then((response) => {
+            console.log("Roll adicionado com sucesso");
+        })
+        .catch((e) => {
+        console.log(e);
+        });
     }
 
     function addIniciativa(ini){
@@ -179,12 +204,10 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                                             rollSemMod === 100 ? 'Sucesso Crítico, rodou: ' + roll :
                                             (valorGarantido <= 0) ? 'Ação Impossivel!' :
                                             (roll >= 1 && roll < valorMinimo) ? 'Falhou, rodou: ' + roll + (modifier !== 0 ? ` (${rollSemMod} com modifier de: ${modifier})` : '') +  '.' :
-                                            (roll < 100 && roll > valorMinimo && valorGarantido < 100) ? 'Sucesso, rodou: ' + roll + (modifier !== 0 ? ` (${rollSemMod} com modifier de: ${modifier})` : '') +'.' : 
+                                            (roll <= 100 && roll >= valorMinimo && valorGarantido < 100) ? 'Sucesso, rodou: ' + roll + (modifier !== 0 ? ` (${rollSemMod} com modifier de: ${modifier})` : '') +'.' : 
                                             (modifier > 0 && valorGarantido >= 100) ? 'Ação garantida!' : ''
                                         }</h2>
-                                        { (roll <= 0 || roll >= 100 || valorGarantido <= 0) ? '' : 
-                                            <h2 style={{ fontSize: '20px', marginBottom: '20px'}}>{`Valor minimo para sucesso era: ${valorMinimo}.`}</h2>
-                                        }
+                                        <h2 style={{ fontSize: '20px', marginBottom: '20px'}}>{`Valor minimo para sucesso era: ${valorMinimo}.`}</h2>
                                         {roll > valorMinimo ?
                                             <h2 style={{ fontSize: '20px', marginBottom: '20px'}}> Valor de contestação: {contestacao}.</h2>
                                         :
@@ -251,10 +274,11 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                                             }
                                             setRoll(newRoll);
                                             var cont = Math.ceil((valor * newRoll)/100);
-                                            console.log(cont);
                                             setContestacao(cont);
-                                            setValorGarantido(valor + parseInt(mod));
+                                            var valorGar = valor + parseInt(mod);
+                                            setValorGarantido(valorGar);
                                             setHasRoll(true);
+                                            salvarRoll(cont, newRoll, valorGar);
                                         }
                                     }>Rodar</button>
                             </div>
