@@ -64,6 +64,9 @@ function Mestre(){
                 <Link to={`/distribuirPontos`}>
                     <h1 style ={{paddingTop:'5px', color: '#696969', cursor: 'pointer'}}>{`->Distribuir Pontos<-`}</h1>
                 </Link>
+                <Link to={`/rolls`}>
+                    <h1 style ={{paddingTop:'5px', color: '#696969', cursor: 'pointer'}}>{`->Rolls<-`}</h1>
+                </Link>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                 <h1 style ={{paddingTop:'20px', color: '#fff'}}>Jogadores:</h1>
