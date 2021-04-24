@@ -4,4 +4,8 @@ const getConstante = (name) => {
     return http.get(`/constantes?name=${name}`);
 };
 
-export default { getConstante };
+const updateConstante = (name, data) => {
+    return http.put(`/constantes?name=${name}`, data);
+};
+
+export default { getConstante, updateConstante};
