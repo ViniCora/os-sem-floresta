@@ -49,6 +49,34 @@ function Personagem({Nome}){
                             <h2 style={{paddingLeft: '20px', paddingTop: '10px', margin: '0px', paddingBottom: '40px'}}>{`Cargo da base: ${atributes.oficio_base}`}</h2>
                         </div>
                     </div>
+                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom:'20px'}}>
+                        <label style={{fontSize: '30px', paddingRight:'10px', color: '#fff'}}>Mostrar na Tier List?</label>
+                        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', paddingBottom: '10px', paddingTop: '20px'}}>
+                            <label style={{fontSize: '30px', paddingRight:'10px', color: '#fff'}}>Não</label>
+                            <label class="switch"> 
+                                <input type="checkbox" checked={mostrarTela ? true : false} onClick={()=>{
+                                    var valueMostrar = false;
+                                    if(mostrarTela){
+                                        valueMostrar = false;
+                                        setMostrarTela(false)
+                                    }else{
+                                        valueMostrar = true;
+                                        setMostrarTela(true);
+                                    }
+
+                                    NpcDataService.updateMostrarTela(atributes._id, {value: valueMostrar})
+                                    .then((response) => {
+                                        console.log("Mostrar na tela inicial alterado com sucesso");
+                                    })
+                                    .catch((e) => {
+                                    console.log(e);
+                                    });
+                                }} />
+                                <span class="slider round"></span>
+                            </label>
+                            <label style={{fontSize: '30px', paddingLeft:'10px', color: '#fff'}}>Sim</label>
+                        </div>
+                    </div>
 
                     <AtributosNPC id={atributes._id} Força={atributes.força} Destreza={atributes.destreza} Carisma={atributes.carisma} Inteligencia={atributes.inteligencia} 
                         Resistencia={atributes.resistencia} Mira={atributes.mira} Oficio={atributes.oficio} Percepcao={atributes.percepcao} 
