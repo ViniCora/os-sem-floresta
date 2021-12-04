@@ -65,7 +65,7 @@ function App() {
           </Link>
         </div>
         <div>
-          <h1 style ={{paddingTop:'20px', color: '#fff'}}>Escolha um pesonagem:</h1>
+          <h1 style ={{paddingTop:'20px', color: '#fff'}}>Escolha um personagem:</h1>
         </div>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '50px'}}>
           <div style={{display: 'block' ,justifyContent: 'space-between', maxWidth: `${tamanhoPagina}%`}}>

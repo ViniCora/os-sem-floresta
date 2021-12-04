@@ -15,6 +15,7 @@ import iniciativaImg from '../Icons/podium.png'
 import percepcaoImg from '../Icons/Binoculars.png'
 import plus from '../Icons/plus.png'
 import minus from '../Icons/minus.png'
+import radiatividadeIcon from '../Icons/Radioactive.png'
 import Modal from 'react-modal';
 import AtributesDataService from '../Services/AtributesService.js';
 import IniciativaDataService from '../Services/IniciativaService.js';
@@ -296,6 +297,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                          Atributo === 'Mira' ? miraImg : 
                          Atributo === 'Ofício' ? oficioImg : 
                          Atributo === 'Percepção' ? percepcaoImg : 
+                         Atributo === 'Radioatividade' ? radiatividadeIcon : 
                          Atributo === 'Vida' ? vidaImg : iniciativaImg} alt="Força" />
                 </div>
                 {
@@ -323,7 +325,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 {(isEditar) ? '' : 
                 
-                    (Atributo === 'Vida') ? '' : 
+                    (Atributo === 'Vida' || Atributo === 'Radioatividade')  ? '' : 
                 
                     <div style={{paddingRight: '10px'}}>
                         <input type='image' src={ (dados)} alt='row' width="40px" height="40px" onClick={()=>{
@@ -347,7 +349,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
             
                  {
                      Atributo === 'Iniciativa' ? '' : 
-                     Atributo !== "Vida" ? '' :
+                     (Atributo !== "Vida" && Atributo !== "Radioatividade")  ? '' :
                      <div style={{paddingRight: '10px'}}>
                          <input type='image' src={isEditar ? cancenlar : editarImg} alt='row' width="40px" height="40px" onClick={()=>{
                  
@@ -364,7 +366,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                  }
 
                 {
-                    ( Atributo === 'Iniciativa' || Atributo == 'Vida') ? '' :
+                    ( Atributo === 'Iniciativa' || Atributo == 'Vida' || Atributo == 'Radioatividade') ? '' :
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                         <div style={{paddingRight: '10px'}}>
                          <input type='image' src={minus} alt='row' width="40px" height="40px" onClick={()=>{
@@ -396,6 +398,7 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
              {isEditar ? 
                 <input type='image' src={confirmar} alt='row' width="40px" height="40px" onClick={()=>{
 
+                        if(Atributo === 'Vida'){
                             AtributesDataService.updateVida(id, {value: valor})
                             .then((response) => {
                                 console.log("Vida alterada com sucesso");
@@ -403,6 +406,16 @@ function CardAtributos({Atributo, Banco, Value, id, Adicionar, setAdicionar, nom
                             .catch((e) => {
                             console.log(e);
                             });
+                        }else if(Atributo === "Radioatividade"){
+                            console.log("oi");
+                            AtributesDataService.updateRadioatividade(id, {value: valor})
+                            .then((response) => {
+                                console.log("Radioatividade alterada com sucesso");
+                            })
+                            .catch((e) => {
+                            console.log(e);
+                            });
+                        }
 
                         setIsEditar(false);
                         

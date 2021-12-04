@@ -79,7 +79,6 @@ function CadPlayer(){
             <DivNomeEBaseCad Atributo="Nome" Value={nome} setValue={setNome}></DivNomeEBaseCad>
             <DivNomeEBaseCad Atributo="Jogador" Value={jogador} setValue={setJogador}></DivNomeEBaseCad>
             <DivNomeEBaseCad Atributo="Nascimento" Value={nascimento} setValue={setNascimento}></DivNomeEBaseCad>
-            <DivNomeEBaseCad Atributo="Ofício Base" Value={oficioBase} setValue={setOficioBase}></DivNomeEBaseCad>
             <DivNomeEBaseCad Atributo="Ofício Pré Base" Value={oficioPreBase} setValue={setOficioPreBase}></DivNomeEBaseCad>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingTop: '20px', paddingBottom: '50px'}}>
               {pontosUsados() > 470 ? '' : 

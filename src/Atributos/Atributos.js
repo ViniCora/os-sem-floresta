@@ -1,10 +1,12 @@
 import React from 'react'
 import CardAtributos from '../CardAtributos/CardAtributos';
 
-function Atributos({id, Força, Destreza, Carisma, Inteligencia, Resistencia, Mira, Oficio, Percepcao, Vida, Adicionar, setAdicionar, nome, imagePath}){
+function Atributos({id, Força, Destreza, Carisma, Inteligencia, Resistencia, Mira, Oficio, Percepcao, Radioatividade, Vida, Adicionar, setAdicionar, nome, imagePath}){
     return(
         <div>
             <CardAtributos Atributo="Vida" Banco="vida" Value={Vida} id={id} Adicionar={Adicionar} 
+                setAdicionar={setAdicionar} nome={nome} imagePath={imagePath}></CardAtributos>
+            <CardAtributos Atributo="Radioatividade" Banco="radioatividade" Value={Radioatividade} id={id} Adicionar={Adicionar} 
                 setAdicionar={setAdicionar} nome={nome} imagePath={imagePath}></CardAtributos>
             <CardAtributos Atributo="Iniciativa" Banco="" Value={Destreza} id={id} Adicionar={Adicionar}
                 setAdicionar={setAdicionar} nome={nome} imagePath={imagePath}></CardAtributos>

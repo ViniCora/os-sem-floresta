@@ -37,10 +37,7 @@ function Header(){
         <header className="Header">
           <div style={{display: 'flex', flexDirection:'column', alignItems: 'center'}}>
           <Link style={{textDecoration: 'none'}} to="/">
-            <p style ={{color: '#fff', marginBottom: '10px'}}>{`OS SEM FLORESTA: SESSÃO ${totalArco1.value + totalArco2.value}`}</p>
-          </Link>
-          <Link style={{textDecoration: 'none'}} to="/">
-            <p style ={{color: '#fff',  marginBottom: '10px'}}>{`ARCO 2: SESSÃO ${totalArco2.value}`}</p>
+            <p style ={{color: '#fff', marginBottom: '10px'}}>{`OS SEM FLORESTA - REBOOT: SESSÃO ${totalArco1.value}`}</p>
           </Link>
           </div>
         </header>

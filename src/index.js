@@ -13,6 +13,7 @@ import DistribuirPontos from './DistribuirPontos/DistribuirPontos';
 import Iniciativa from './Iniciativa/Iniciativa';
 import TelaRolls from './TelaRolls/TelaRolls.js';
 import Mestre from './Mestre/Mestre';
+import TierList from './TierList/TierList';
 
 
 window.onload = function(){
@@ -33,6 +34,7 @@ window.onload = function(){
             <Route path="/iniciativa" component={Iniciativa} exact />
             <Route path="/rolls" component={TelaRolls} exact />
             <Route path="/Mestre" component={Mestre} exact />
+            <Route path="/TierList" component={TierList} exact />
             {dataPlayer == null ? '' :  dataPlayer.map((d, index) => {
 
               return (
